@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FrontendController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,3 +25,7 @@ Route::get('/about-us', [FrontendController::class, 'aboutUs']);
 Route::get('/contact-us', [FrontendController::class, 'contactUs']);
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
