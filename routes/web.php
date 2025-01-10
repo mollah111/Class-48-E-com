@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Auth;
@@ -37,3 +38,7 @@ Auth::routes();
 
 Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard']);
 Route::get('/admin/logout', [AdminController::class, 'adminLogout']);
+
+//Categories....
+
+Route::get('/admin/category/list', [CategoryController::class, 'categoryList']);
