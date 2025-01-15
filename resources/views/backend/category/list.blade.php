@@ -40,17 +40,19 @@
                   </tr>
                   </thead>
                   <tbody>
+                  @foreach ($categories as $category)
                   <tr>
-                    <td>1</td>
-                    <td>Test Name</td>
+                    <td>{{$loop->index+1}}</td>
+                    <td>{{$category->name}}</td>
                     <td>
-                      <img src="">
+                      <img src="{{$category->image}}">
                     </td>
                     <td>
                       <a href="#" class="btn btn-primary">Edit</a>
                       <a href="#" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
+                  @endforeach
                   </tbody>
                 </table>
               </div>
