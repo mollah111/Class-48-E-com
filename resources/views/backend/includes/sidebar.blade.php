@@ -101,7 +101,7 @@
                         <li class="nav-item">
                             <a href="{{ url('/admin/product/create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Add</p>
+                                <p>Add</p>  
                             </a>
                         </li>
                     </ul>
