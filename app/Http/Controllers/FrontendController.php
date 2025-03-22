@@ -54,6 +54,7 @@ class FrontendController extends Controller
 
     public function viewCart()
     {
+        
         return view ('view-cart');
     }
 
@@ -159,6 +160,14 @@ class FrontendController extends Controller
         elseif($request->action == "buyNow"){
             return redirect('/checkout');
         }
+    }
+
+    public function addToCartDelete ($id)
+    {
+        $cart = Cart::find($id);
+        $cart->delete();
+
+        return redirect()->back();
     }
 
 }
