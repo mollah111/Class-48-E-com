@@ -122,5 +122,44 @@ class FrontendController extends Controller
         return redirect()->back(); 
     }
 
+    public function addToCartDetails (Request $request, $id)
+    {
+        $cartProduct = Cart::where('product_id', $id)->where('ip_address', $request->ip())->orderBy('id', 'desc')->first();
+        $product = Product::find($id);
+
+        if($cartProduct ==null){
+            $cart = new Cart();
+            $cart->ip_address = $request->ip();
+            $cart->product_id = $product->id;
+            $cart->qty = $request->qty;
+            $cart->color = $request->color;
+            $cart->size = $request->size;
+
+            if($product->discount_price ==null){
+                $cart->price = $product->regular_price;
+            }
+            elseif($product->discount_price !=null){
+                $cart->price = $product->discount_price;
+            }
+
+            $cart->save();
+        }
+        
+        elseif($cartProduct !=null){
+            $cartProduct->qty = $cartProduct->qty + $request->qty;
+            $cartProduct->color = $request->color;
+            $cartProduct->size = $request->size;
+            $cartProduct->save();
+
+        }
+        if($request->action == "addToCart"){
+            return redirect()->back();
+        }
+        
+        elseif($request->action == "buyNow"){
+            return redirect('/checkout');
+        }
+    }
+
 }
 
