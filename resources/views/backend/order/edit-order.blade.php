@@ -22,7 +22,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="" method="">
+            <form action="{{url('/admin/update-order/'.$order->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -39,31 +39,48 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="invoiceid">Invoice Number</label>
-                                    <input type="text" id="invoiceid" name="" class="form-control" value="DM-1">
+                                    <input type="text" id="invoiceid" name="invoiceId" class="form-control" value="{{$order->invoiceId}}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputDescription">Customer Name</label>
-                                    <input type="text" id="#" name="" class="form-control" value="Mr. Sakib" required>
+                                    <input type="text" id="#" name="c_name" class="form-control" value="{{$order->c_name}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputDescription">Customer Phone</label>
-                                    <input type="text" id="#" name="" class="form-control" value="01302627255" required>
+                                    <input type="text" id="#" name="c_phone" class="form-control" value="{{$order->c_phone}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputDescription">Customer Address</label>
-                                    <textarea id="inputDescription" name="" class="form-control" rows="4" required>Mirpur, Dhaka.</textarea>
+                                    <textarea id="inputDescription" name="address" class="form-control" rows="4" required>{{$order->address}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputDescription">Delivery Charge</label>
-                                    <input type="text" id="#" name="" class="form-control" value="80" required>
+                                    <input type="text" id="area" name="area" class="form-control" value="{{$order->area}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputStatus">Select Courier</label>
-                                    <select id="inputStatus" class="form-control custom-select">
-                                        <option disabled>Select one</option>
-                                        <option>Steadfast</option>
-                                        <option>Pathao</option>
-                                        <option>Others</option>
+                                    <select id="inputStatus" name="courier_name" class="form-control custom-select">
+                                        @if ($order->courier_name == null)
+                                            <option disabled selected>Select one</option>
+                                            <option value="steadfast">Steadfast</option>
+                                            <option value="pathao">Pathao</option>
+                                            <option value="others">Others</option>
+
+                                            @elseif ($order->courier_name == "steadfast")
+                                                <option value="steadfast" selected>Steadfast</option>
+                                                <option value="pathao">Pathao</option>
+                                                <option value="others">Others</option>
+
+                                            @elseif ($order->courier_name == "pathao")
+                                                <option value="pathao" selected>Pathao</option>
+                                                <option value="steadfast">Steadfast</option>
+                                                <option value="others">Others</option>
+                                            @else
+                                                <option value="others" selected>Others</option>
+                                                <option value="pathao">Pathao</option>
+                                                <option value="steadfast">Steadfast</option>
+                                                  
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -85,17 +102,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <img src="https://placehold.co/100x100">
-                                        2 X Test Product | Unit Price: 1200 | Color: Red | Size: L<br><br>
-                                        <img src="https://placehold.co/100x100">
-                                        1 X Test2 Product | Unit Price: 1200 | Color: Red | Size: L<br><br>
-                                        <img src="https://placehold.co/100x100">
-                                        3 X Test3 Product | Unit Price: 1200<br><br>
+                                        @foreach ($order->orderDetails as $details)
+                                        <img src="{{asset('backend/images/product/'.$details->product->image)}}" height="100" width="100">
+                                        {{$details->qty}} X {{$details->product->name}} | Unit Price: {{$details->price}} | Color: {{$details->color??'N.A'}} | Size: {{$details->size??'N.A'}}<br><br>
+                                        @endforeach
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="inputDescription">Order Price</label>
-                                            <input type="text" id="#" name="" class="form-control" value="2000" required>
+                                            <input type="text" id="#" name="price" class="form-control" value="{{$order->price}}" required>
                                         </div>
                                     </div>
                                 </div>
