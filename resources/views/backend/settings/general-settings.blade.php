@@ -22,7 +22,7 @@
 
         <!-- Main content -->
         <section class="content">
-            <form action="{{ url('/admin/general-setting/update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{url('/admin/general-setting/update')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
